@@ -47,7 +47,7 @@ public class ControllerActivity extends Activity {
     private static String lastFileName = null;
     Socket socket = null;
     String buffer = "";
-    MySurfaceView r1;
+    MySurfaceView mySurfaceView;
     ImageButton TakePhotoBtn = null;
     ImageButton takeVideoBtn = null;
     ImageButton settingBtn = null;
@@ -135,10 +135,10 @@ public class ControllerActivity extends Activity {
         String ip = intToIp(ipAddress);
         setContentView(R.layout.activity_controller);
 
-        this.r1 = (MySurfaceView) this.findViewById(R.id.mySurfaceViewVideo1);
+        this.mySurfaceView = (MySurfaceView) this.findViewById(R.id.mySurfaceViewVideo1);
         this.relativeLayout = (RelativeLayout) this.findViewById(R.id.relativeLayout);
-        String CameraIp = "http://" + ip + ":8080/?action=stream";
-        r1.GetCameraIP(CameraIp);
+        String cameraIp = "http://" + ip + ":8080/?action=stream";
+        mySurfaceView.getCameraIP(cameraIp);
         findView();
     }
 
@@ -146,7 +146,7 @@ public class ControllerActivity extends Activity {
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        r1.surfacePause();
+        mySurfaceView.surfacePause();
 
     }
 
@@ -154,7 +154,7 @@ public class ControllerActivity extends Activity {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        r1.surfaceResume();
+        mySurfaceView.surfaceResume();
     }
 
     // 监听音量键事件，用于音量键拍照,用于想把手机放在口袋中就能实现拍照的情况

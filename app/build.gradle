@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-
+def releaseTime() {
+    return new Date().format("yyyyMMdd_hhmmss", TimeZone.getTimeZone("GMT+8"))
+}
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -8,13 +10,83 @@ android {
         applicationId "com.hv.remote"
         minSdkVersion 14
         targetSdkVersion 27
+        versionCode 3
+        flavorDimensions "versionCode"
+        versionName "0.03"
+    }
+
+    //签名配置
+    signingConfigs {
+        debug {
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storeFile file("E:/code/trace_code/TraceAppAS/TraceAPP.keystore")
+            storePassword "android"
+        }
+        release {
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            storeFile file("E:/code/trace_code/TraceAppAS/TraceAPP.keystore")
+            storePassword "android"
+
+        }
     }
 
     buildTypes {
-        release {
+
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //混淆
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.release
         }
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名需要在buildTypes前
+            signingConfig signingConfigs.release
+
+
+        }
+        sourceSets {
+            main {
+                jniLibs.srcDir 'libs'
+                jni.srcDirs = []
+            }
+        }
+
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+//            outputFileName = "${releaseTime()}_RCamera_${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+            outputFileName = "RCamera_${defaultConfig.versionName}.apk"
+        }
+    }
+
+    productFlavors {
+
+        xinyoda {}
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+
     }
 }
 

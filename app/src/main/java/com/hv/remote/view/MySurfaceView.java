@@ -68,7 +68,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 
     }
 
-    public void GetCameraIP(String p) {
+    public void getCameraIP(String p) {
         urlstr = p;
     }
 
