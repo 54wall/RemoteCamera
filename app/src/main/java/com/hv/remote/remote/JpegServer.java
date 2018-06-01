@@ -1,4 +1,4 @@
-package com.hv.remote;
+package com.hv.remote.remote;
 
 import android.util.Log;
 
@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.net.Socket;
 import java.util.StringTokenizer;
-
+/*JpegServer用于发送数据流的线程*/
 public class JpegServer extends SimpleServer {
     public final String TAG = this.getClass().getSimpleName();
     private final static String BOUNDARY_STRING = "boundarystring";

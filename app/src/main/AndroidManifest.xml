@@ -60,7 +60,7 @@
             android:theme="@style/perference_set_activity" />
 
         <service
-            android:name=".BackgroundService"
+            android:name=".service.BackgroundService"
             android:enabled="true"
             android:exported="false" />
     </application>

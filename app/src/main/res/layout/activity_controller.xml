@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal">
 
-        <com.hv.remote.view.MySurfaceView
+        <com.hv.remote.controller.MySurfaceView
             android:id="@+id/mySurfaceViewVideo1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

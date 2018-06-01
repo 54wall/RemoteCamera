@@ -22,7 +22,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.hv.remote.BackgroundService;
+import com.hv.remote.service.BackgroundService;
 import com.hv.remote.R;
 import com.hv.remote.view.CustomDialog;
 import com.hv.remote.wifi.WifiApUtil;

@@ -1,4 +1,4 @@
-package com.hv.remote;
+package com.hv.remote.remote;
 
 import android.graphics.ImageFormat;
 import android.graphics.Rect;

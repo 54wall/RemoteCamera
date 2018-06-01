@@ -1,4 +1,4 @@
-package com.hv.remote.view;
+package com.hv.remote.controller;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+/*控制端显示远程图像*/
 public class MySurfaceView extends SurfaceView implements Callback {
     public final String TAG = this.getClass().getSimpleName();
     private static int mScreenWidth;
@@ -110,7 +111,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
             HttpURLConnection urlConn = null;
 
             while (runFlag) {
-
+                Log.e(TAG,"DrawVideo() 114");
                 long Time = 0;
                 long Span = 0;
                 int fps = 0;
@@ -131,6 +132,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
                         if (read > 0) {
 
                             for (int i = 0; i < read; i++) {
+                                Log.e(TAG,"DrawVideo() 135 status:"+status);
                                 switch (status) {
                                     // Content-Length:
                                     case 0:

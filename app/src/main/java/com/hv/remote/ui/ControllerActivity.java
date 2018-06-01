@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,7 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.hv.remote.R;
-import com.hv.remote.view.MySurfaceView;
+import com.hv.remote.controller.MySurfaceView;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -42,7 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ControllerActivity extends Activity {
-    public final String TAG = this.getClass().getSimpleName();
+    public final static String TAG = ControllerActivity.class.getSimpleName();
     public final static String CONTROLER_POSITION = "/remoteCamera/controler/";
     private static String lastFileName = null;
     Socket socket = null;
@@ -59,6 +60,7 @@ public class ControllerActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0x11) {
+                Log.e(TAG,"接收到数据");
                 Bundle bundle = msg.getData();
                 int size = bundle.getInt("size");
                 System.out.println("接受到一次数据大小为:" + size);
@@ -92,7 +94,7 @@ public class ControllerActivity extends Activity {
      * @throws IOException
      */
     public static void saveToSDCard(byte[] data, Context context) throws IOException {
-
+        Log.e(TAG,"saveToSDCard");
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // 格式化时间
         String filename = format.format(date) + ".jpg";
@@ -124,7 +126,7 @@ public class ControllerActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // 获取wifi服务
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         // 判断wifi是否开启
         if (!wifiManager.isWifiEnabled()) {
             wifiManager.setWifiEnabled(true);
@@ -304,10 +306,12 @@ public class ControllerActivity extends Activity {
             msg.what = 0x11;
             Bundle bundle = new Bundle();
             bundle.clear();
+            Log.e(TAG,"MyThread");
             try {
                 // 连接服务器 并设置连接超时为5秒
                 socket = new Socket();
                 socket.connect(new InetSocketAddress("192.168.43.1", 30000), 1000);
+                Log.e(TAG,"314");
                 // 获取输入输出流
                 OutputStream ou = socket.getOutputStream();
                 DataInputStream dataInput = new DataInputStream(socket.getInputStream());

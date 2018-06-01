@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,7 +33,7 @@ public class PreviewImageActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         intent = getIntent();
         fileName = intent.getType();
-        System.out.println(">>>>>>>" + fileName);
+        Log.e(TAG,"fileName:"+fileName);
         setContentView(R.layout.myimageview);
 
         previewImage = (ImageView) findViewById(R.id.activity_preview_image);

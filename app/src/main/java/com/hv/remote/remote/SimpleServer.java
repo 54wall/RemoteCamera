@@ -1,4 +1,4 @@
-package com.hv.remote;
+package com.hv.remote.remote;
 
 import android.util.Log;
 
@@ -76,7 +76,7 @@ public abstract class SimpleServer implements Runnable {
         ConnectionThread connectionThread = new ConnectionThread(socket);
         mConnectionThreads.add(connectionThread);
 
-        connectionThread.start();// ������������
+        connectionThread.start();
     }
 
     public interface Callback {

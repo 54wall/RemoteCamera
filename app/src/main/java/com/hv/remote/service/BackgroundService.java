@@ -1,4 +1,4 @@
-package com.hv.remote;
+package com.hv.remote.service;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -21,6 +21,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.hv.remote.remote.JpegFactory;
+import com.hv.remote.remote.JpegServer;
+import com.hv.remote.R;
 import com.hv.remote.ui.MainActivity;
 
 import java.io.IOException;
@@ -32,7 +35,7 @@ public class BackgroundService extends Service {
     private SurfaceView mSurfaceView;
 
     private Camera mCamera;
-    private JpegServer mMjpegServer;
+    private JpegServer jpegServer;
 
     private String mPort;
 
@@ -119,9 +122,10 @@ public class BackgroundService extends Service {
                 JpegFactory jpegFactory = new JpegFactory(previewWidth, previewHeight, quality);
                 mCamera.setPreviewCallback(jpegFactory);
 
-                mMjpegServer = new JpegServer(jpegFactory);
+                jpegServer = new JpegServer(jpegFactory);
                 try {
-                    mMjpegServer.start(port);
+                    jpegServer.start(port);
+                    Log.e(TAG,"jpegServer.start(port):"+port);
                 } catch (IOException e) {
                     String message = "Port: " + port + " is not available";
                     Log.v(TAG, message);
@@ -175,8 +179,8 @@ public class BackgroundService extends Service {
 
         destroyOverlay();
 
-        if (mMjpegServer != null) {
-            mMjpegServer.close();
+        if (jpegServer != null) {
+            jpegServer.close();
         }
     }
 

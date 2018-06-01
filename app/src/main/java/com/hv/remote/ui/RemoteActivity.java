@@ -25,8 +25,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hv.remote.JpegFactory;
-import com.hv.remote.JpegServer;
+import com.hv.remote.remote.JpegFactory;
+import com.hv.remote.remote.JpegServer;
 import com.hv.remote.R;
 
 import java.io.ByteArrayOutputStream;
@@ -65,10 +65,10 @@ public class RemoteActivity extends Activity implements SurfaceHolder.Callback {
     private static Camera mCamera = null;
     private static String lastFileName = null;
     public ServerSocket serverSocket = null;
-    public serverSocketThread myServerSocketThread = null;
+    public ServerSocketThread myServerSocketThread = null;
     public boolean takePictureflag = false;
     int bufferSize = 0;
-    private JpegServer mMjpegServer = null;
+    private JpegServer jpegServer = null;
     private boolean runflag = true;
     private boolean autoFocusflag = false;
 
@@ -129,7 +129,7 @@ public class RemoteActivity extends Activity implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         Toast.makeText(RemoteActivity.this, "该手机将作为被遥控端！连接密码12345678", Toast.LENGTH_SHORT).show();
         // 开启接受数据服务接受控制端的控制指令
-        myServerSocketThread = new serverSocketThread();
+        myServerSocketThread = new ServerSocketThread();
         myServerSocketThread.start();
 
     }
@@ -151,11 +151,11 @@ public class RemoteActivity extends Activity implements SurfaceHolder.Callback {
             mCamera.release();
             runflag = false;
         }
-        if (mMjpegServer != null) {
-            mMjpegServer.close();
+        if (jpegServer != null) {
+            jpegServer.close();
         }
     }
-
+    @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.v(TAG, "surfaceCreated()");
 
@@ -254,9 +254,10 @@ public class RemoteActivity extends Activity implements SurfaceHolder.Callback {
         JpegFactory jpegFactory = new JpegFactory(previewWidth, previewHeight, quality);
         mCamera.setPreviewCallback(jpegFactory);
 
-        mMjpegServer = new JpegServer(jpegFactory);
+        jpegServer = new JpegServer(jpegFactory);
         try {
-            mMjpegServer.start(port);
+            jpegServer.start(port);
+            Log.e(TAG,"jpegServer.start(port):"+port);
         } catch (IOException e) {
             String message = "Port: " + port + " is not available";
             Log.v(TAG, message);
@@ -333,7 +334,7 @@ public class RemoteActivity extends Activity implements SurfaceHolder.Callback {
      *
      */
 
-    public class serverSocketThread extends Thread {
+    public class ServerSocketThread extends Thread {
 
         public byte[] readBuffer = new byte[1024];
         public int readBufferSize = 0;
@@ -348,6 +349,7 @@ public class RemoteActivity extends Activity implements SurfaceHolder.Callback {
             try {
                 serverSocket = new ServerSocket(30000);
                 while (true) {
+                    Log.e(TAG,"ServerSocketThread while.");
                     Message msg = new Message();
                     msg.what = 0x11;
                     try {
