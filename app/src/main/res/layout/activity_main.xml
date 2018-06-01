@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/enterSetupBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:onClick="onImageButtonClick"
+            android:src="@drawable/enter_setup" />
+
+        <ImageButton
+            android:id="@+id/enterControlerBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:onClick="onImageButtonClick"
+            android:src="@drawable/enter_controler" />
+
+        <ImageButton
+            android:id="@+id/enterControledBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:onClick="onImageButtonClick"
+            android:src="@drawable/enter_controled" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/instructionsBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#00000000"
+        android:onClick="onImageButtonClick"
+        android:src="@drawable/instructions" />
+
+</RelativeLayout>
