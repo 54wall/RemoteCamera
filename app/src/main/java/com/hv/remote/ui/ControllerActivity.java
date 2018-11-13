@@ -135,11 +135,13 @@ public class ControllerActivity extends Activity {
         int ipAddress = wifiInfo.getIpAddress();
         // 将获得的ip地址转化为8位8位的格式，并将主机号用1代替，表示被控制端的IP地址
         String ip = intToIp(ipAddress);
+        Log.e(TAG,"ipAddress:"+ipAddress+",ip:"+ip);
         setContentView(R.layout.activity_controller);
 
         this.mySurfaceView = (MySurfaceView) this.findViewById(R.id.mySurfaceViewVideo1);
         this.relativeLayout = (RelativeLayout) this.findViewById(R.id.relativeLayout);
         String cameraIp = "http://" + ip + ":8080/?action=stream";
+        Log.e(TAG,"cameraIp:"+cameraIp);
         mySurfaceView.getCameraIP(cameraIp);
         findView();
     }

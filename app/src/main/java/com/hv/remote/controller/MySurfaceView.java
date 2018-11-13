@@ -111,7 +111,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
             HttpURLConnection urlConn = null;
 
             while (runFlag) {
-                Log.e(TAG,"DrawVideo() 114");
+                Log.e(TAG,"DrawVideo() 114 开始循环");
                 long Time = 0;
                 long Span = 0;
                 int fps = 0;
@@ -120,6 +120,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
 
                 try {
                     url = new URL(urlstr);
+                    Log.e(TAG,"urlstr:"+urlstr);
                     urlConn = (HttpURLConnection) url.openConnection(); // HTTPURLConnetion
                     Time = System.currentTimeMillis();
                     int read = 0;
@@ -128,11 +129,11 @@ public class MySurfaceView extends SurfaceView implements Callback {
                     while (runFlag) {
                         runToOver = false;
                         read = urlConn.getInputStream().read(buffer, 0, readSize);
-
+//                        Log.e(TAG,"DrawVideo() 135 status:"+status+",buffer:"+buffer);
                         if (read > 0) {
 
                             for (int i = 0; i < read; i++) {
-                                Log.e(TAG,"DrawVideo() 135 status:"+status);
+
                                 switch (status) {
                                     // Content-Length:
                                     case 0:
@@ -226,7 +227,7 @@ public class MySurfaceView extends SurfaceView implements Callback {
                                             status = 0;
                                         break;
                                     case 15:
-                                        if (buffer[i] == (byte) 0xFF)
+                                        if (buffer[i] == (byte) 0xFF)//255
                                             status++;
                                         jpg_count = 0;
                                         jpg_buf[jpg_count++] = (byte) buffer[i];

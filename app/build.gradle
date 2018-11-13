@@ -3,13 +3,13 @@ def releaseTime() {
     return new Date().format("yyyyMMdd_hhmmss", TimeZone.getTimeZone("GMT+8"))
 }
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+
 
     defaultConfig {
         applicationId "com.hv.remote"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 3
         flavorDimensions "versionCode"
         versionName "0.03"
@@ -91,5 +91,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-v4:28.0.0'
 }
